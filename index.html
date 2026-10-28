@@ -3,36 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peril Micro Credit® - Live System</title>
+    <title>Peril Micro Credit® - Unified Enterprise Portal</title>
     <style>
         :root {
-            --primary: #0f2027; --secondary: #203a43; --accent: #2c5364;
-            --gold: #d4af37; --success: #2ecc71; --danger: #e74c3c;
-            --light: #f8f9fa; --dark: #2c3e50;
+            --primary: #0f2027;
+            --secondary: #203a43;
+            --accent: #2c5364;
+            --gold: #d4af37;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
         }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #eef2f3; margin: 0; padding: 0; color: var(--dark); }
-        
-        /* AUTH SCREEN */
-        #authSection { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); height: 100vh; display: flex; justify-content: center; align-items: center; }
-        .auth-card { background: white; padding: 40px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); width: 100%; max-width: 420px; text-align: center; }
-        .logo-emblem { width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); border: 3px solid var(--gold); display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 26px; font-weight: bold; margin: 0 auto 15px auto; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
-        .form-group { text-align: left; margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid #cccccc; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
-        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; padding: 14px; border-radius: 8px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .forgot-trigger { display: block; margin-top: 15px; color: var(--accent); text-decoration: none; font-size: 13px; font-weight: 500; cursor: pointer; }
 
-        /* DASHBOARD SCREEN */
-        #dashboardSection { display: none; padding: 25px; }
-        .dashboard-header { background: white; padding: 20px 30px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 30px; }
-        .grid-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 30px; }
-        .panel-card { background: white; padding: 30px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .panel-card h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--light); padding-bottom: 12px; font-size: 18px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #eef2f3;
+            margin: 0;
+            padding: 0;
+            color: var(--dark);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo-emblem {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: 3px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 26px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        /* PHASE 1: LOGIN SCREEN */
+        #authSection {
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .auth-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+        .auth-card h2 {
+            margin: 10px 0 5px 0;
+            color: var(--primary);
+            font-size: 26px;
+        }
+        .auth-meta {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .forgot-trigger {
+            display: block;
+            margin-top: 15px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* PHASE 2: DASHBOARD SCREEN */
+        #dashboardSection {
+            display: none;
+            padding: 25px;
+        }
+        .dashboard-header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        .header-meta h2 { margin: 0; color: var(--primary); font-size: 26px; }
+        .header-meta p { margin: 4px 0 0 0; color: #666; font-size: 13px; }
+        
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+        .panel-card {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .panel-card h3 {
+            margin-top: 0;
+            color: var(--primary);
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 12px;
+            font-size: 18px;
+        }
+        
         .table-wrap { overflow-x: auto; margin-top: 15px; }
         table { width: 100%; border-collapse: collapse; font-size: 14px; }
         th, td { padding: 14px 12px; text-align: left; border-bottom: 1px solid #eef2f3; }
-        th { background-color: var(--primary); color: white; }
-        .action-btn { background: var(--gold); color: #000; border: none; padding: 6px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        th { background-color: var(--primary); color: white; font-weight: 600; }
+        .action-btn {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+        }
 
         /* PRINT CONFIG */
         .print-view-manifest { display: none; background: white; padding: 40px; }
@@ -50,9 +180,12 @@
 <!-- PHASE 1: LOGIN -->
 <div id="authSection">
     <div class="auth-card">
-        <div class="logo-emblem">R®</div>
+        <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+            <div class="logo-emblem">R®</div>
+        </div>
         <h2>Peril Micro Credit®</h2>
-        <div style="font-size: 12px; color: #7f8c8d; margin-bottom: 30px;">Rudrapur, U.S. Nagar | info@perilmicrocredit.com</div>
+        <div class="auth-meta">Rudrapur, U.S. Nagar | info@perilmicrocredit.com</div>
+        
         <form onsubmit="executeAuthentication(event)">
             <div class="form-group">
                 <label>Admin User ID</label>
@@ -64,25 +197,24 @@
             </div>
             <button type="submit" class="btn-primary">Secure Portal Login</button>
         </form>
-        <span class="forgot-trigger" onclick="triggerMobileOTP()">Forgot Password via Verified Mobile OTP?</span>
+        <a href="#" class="forgot-trigger" onclick="triggerMobileOTP()">Forgot Password via Verified Mobile OTP?</a>
     </div>
 </div>
 
-<!-- PHASE 2: DASHBOARD -->
+<!-- PHASE 2: CORE SOFTWARE DASHBOARD -->
 <div id="dashboardSection">
     <div class="dashboard-header">
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <div class="logo-emblem" style="margin:0;">R®</div>
-            <div>
-                <h2 style="margin:0; color:var(--primary);">Peril Micro Credit®</h2>
-                <p style="margin:4px 0 0 0; color:#666; font-size:13px;">Rudrapur, U.S. Nagar, Uttarakhand | Contact: 8077935959 | Official: info@perilmicrocredit.com</p>
+        <div class="logo-container">
+            <div class="logo-emblem">R®</div>
+            <div class="header-meta">
+                <h2>Peril Micro Credit®</h2>
+                <p>Rudrapur, U.S. Nagar, Uttarakhand | Contact: 8077935959 | Official: info@perilmicrocredit.com</p>
             </div>
         </div>
         <button class="action-btn" style="background:#e74c3c; color:white; padding:10px 20px;" onclick="window.location.reload()">Logout Portal</button>
     </div>
 
     <div class="grid-layout">
-        <!-- FORM PANEL -->
         <div class="panel-card">
             <h3>New Loan Entry Management</h3>
             <form id="loanIntakeForm" onsubmit="commitLoanRecord(event)">
@@ -125,7 +257,6 @@
             </form>
         </div>
 
-        <!-- TABLE PANEL -->
         <div class="panel-card">
             <h3>Active Credit Portfolios & Statement Logs</h3>
             <div class="table-wrap">
@@ -136,30 +267,3 @@
                             <th>Full Name</th>
                             <th>Mobile</th>
                             <th>Principal</th>
-                            <th>Tenure</th>
-                            <th>Operational Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- PRINT VIEW -->
-<div class="print-view-manifest" id="manifestPrintContainer">
-    <div style="text-align: center; border-bottom: 3px double #000; padding-bottom: 15px; margin-bottom: 25px;">
-        <div style="font-size: 32px; font-weight: bold; color: #0f2027;">Peril Micro Credit®</div>
-        <div style="font-size: 13px; color: #333; margin-top: 5px;">Head Office: Rudrapur, U.S. Nagar, Uttarakhand | Helpline: 8077935959</div>
-        <div style="font-size: 13px; color: #333;">Corporate Communication: info@perilmicrocredit.com</div>
-    </div>
-    <h2 style="text-align: center; font-size: 20px; text-decoration: underline; margin-bottom: 25px;">CUSTOMER COLLECTION SHEET / KIST PASSBOOK</h2>
-    <table style="width: 100%; margin-bottom: 30px; font-size: 15px; line-height: 2;">
-        <tr><td><strong>Account ID:</strong> <span id="lblId"></span></td><td><strong>Holder Name:</strong> <span id="lblName"></span></td></tr>
-        <tr><td><strong>Registered Mobile:</strong> <span id="lblMobile"></span></td><td><strong>Capital Disbursal Date:</strong> <span id="lblDisbursal"></span></td></tr>
-        <tr><td><strong>Authorized Principal:</strong> ₹<span id="lblAmt"></span></td><td><strong>Loan Period Lifecycle:</strong> <span id="lblMonths"></span> Months</td></tr>
-    </table>
-    <table style="width: 100%; border: 1px solid #000; border-collapse: collapse;">
-        <thead>
-            <tr>
