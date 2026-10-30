@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peril Micro Credit® - Loan Application Form Generator</title>
+    <style>
+        :root { --primary: #0f2027; --secondary: #203a43; --gold: #d4af37; --light: #f4f7f6; --dark: #2c3e50; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--light); margin: 0; padding: 20px; color: var(--dark); }
+        .form-container { max-width: 850px; background: white; margin: 0 auto; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        
+        /* HEADER BRANDING */
+        .header { display: flex; align-items: center; justify-content: space-between; border-bottom: 3px double var(--primary); padding-bottom: 15px; margin-bottom: 30px; }
+        .logo-circle { width: 55px; height: 55px; border-radius: 50%; border: 3px solid var(--gold); display: flex; align-items: center; justify-content: center; background: var(--primary); color: var(--gold); font-size: 26px; font-weight: bold; }
+        .brand-info h1 { margin: 0; color: var(--primary); font-size: 26px; letter-spacing: 0.5px; }
+        .brand-info p { margin: 3px 0 0 0; color: #555; font-size: 13px; }
+        
+        .form-title { text-align: center; font-size: 20px; font-weight: bold; text-decoration: underline; margin-bottom: 30px; letter-spacing: 0.5px; color: var(--primary); }
+        
+        /* PHOTO ATTACHMENT SLOTS */
+        .photo-section { display: flex; justify-content: flex-end; gap: 20px; margin-bottom: 25px; }
+        .photo-upload-box { width: 105px; height: 130px; border: 2px dashed #aaa; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: #fafafa; cursor: pointer; position: relative; overflow: hidden; }
+        .photo-upload-box:hover { border-color: var(--secondary); background: #f0f4f5; }
+        .photo-upload-box span { font-size: 11px; color: #666; font-weight: 600; padding: 5px; }
+        .photo-upload-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; display: none; }
+        .hidden-file { display: none; }
+
+        /* FIELD GRID LAYOUTS */
+        .section-heading { background: var(--primary); color: white; padding: 8px 12px; font-size: 14px; font-weight: bold; border-radius: 4px; margin: 25px 0 15px 0; letter-spacing: 0.5px; }
+        .fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-group { display: flex; flex-direction: column; }
+        label { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #444; }
+        input, select, textarea { padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; box-sizing: border-box; width: 100%; }
+        input:focus, select:focus { border-color: var(--secondary); outline: none; }
+        
+        .action-area { margin-top: 35px; text-align: center; }
+        .btn-print { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; padding: 14px 40px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: 0.2s; }
+        .btn-print:hover { transform: translateY(-1px); }
+
+        /* PRINT PRESENTATION LAYOUT */
+        .print-signature-row { display: none; margin-top: 60px; justify-content: space-between; font-size: 14px; font-weight: bold; }
+        @media print {
+            body { background: white; padding: 0; }
+            .form-container { box-shadow: none; padding: 0; max-width: 100%; }
+            .action-area, .photo-upload-box span { display: none !important; }
+            .photo-upload-box { border: 1px solid #000 !important; background: transparent !important; }
+            input, select, textarea { border: none !important; border-bottom: 1px solid #000 !important; border-radius: 0 !important; padding: 5px 0 !important; background: transparent !important; }
+            .print-signature-row { display: flex !important; }
+            .section-heading { background: #0f2027 !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <!-- BRAND HEAD -->
+    <div class="header">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="logo-circle">R®</div>
+            <div class="brand-info">
+                <h1>Peril Micro Credit®</h1>
+                <p>Rudrapur, U.S. Nagar, Uttarakhand | Mob: 8077935959 | info@perilmicrocredit.com</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-title">LOAN APPLICATION FORM</div>
+
+    <!-- DOUBLE PHOTO OVERLAYS -->
+    <div class="photo-section">
+        <div class="photo-upload-box" onclick="document.getElementById('appFile').click()">
+            <span>📷<br>Applicant Passport Photo</span>
+            <input type="file" id="appFile" class="hidden-file" accept="image/*" onchange="loadPreview(this, 'appImg')">
+            <img id="appImg">
+        </div>
+        <div class="photo-upload-box" onclick="document.getElementById('coFile').click()">
+            <span>📷<br>Co-Applicant Passport Photo</span>
+            <input type="file" id="coFile" class="hidden-file" accept="image/*" onchange="loadPreview(this, 'coImg')">
+            <img id="coImg">
+        </div>
+    </div>
+
+    <!-- SECTION 1: SYSTEM & PARAMETERS -->
+    <div class="section-heading">1. OFFICE USE & LOAN METRICS</div>
+    <div class="fields-grid">
+        <div class="form-group">
+            <label>Branch Office Location</label>
+            <select id="branch" onchange="autoID()">
+                <option value="PMCR">Rudrapur Branch (PMCR)</option>
+                <option value="PMCK">Kichha Branch (PMCK)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Application / Customer ID (Self-Change Allowed)</label>
+            <input type="text" id="customID" style="font-weight: bold; color: var(--primary);">
+        </div>
+        <div class="form-group">
+            <label>Requested Loan Amount (₹)</label>
+            <input type="number" placeholder="Enter Amount">
+        </div>
+        <div class="form-group">
+            <label>Loan Tenure Period (Months: 0-36 Max)</label>
+            <input type="number" min="0" max="36" placeholder="Enter Months">
+        </div>
+        <div class="form-group">
+            <label>Capital Disbursal Date</label>
+            <input type="date">
+        </div>
+        <div class="form-group">
+            <label>First EMI Instalment Date</label>
+            <input type="date">
+        </div>
+    </div>
+
+    <!-- SECTION 2: APPLICANT PROFILES -->
+    <div class="section-heading">2. APPLICANT & CO-APPLICANT PERSONAL DETAILS</div>
+    <div class="fields-grid">
+        <div class="form-group">
+            <label>Primary Applicant Full Name</label>
+            <input type="text" placeholder="Enter Primary Applicant Name">
+        </div>
+        <div class="form-group">
+            <label>Co-Applicant / Guarantor Name</label>
+            <input type="text" placeholder="Enter Co-Applicant Name">
+        </div>
+        <div class="form-group">
+            <label>Applicant Mobile Number</label>
+            <input type="text" placeholder="Enter 10-Digit Mobile">
+        </div>
+        <div class="form-group">
+            <label>Co-Applicant Mobile Number</label>
+            <input type="text" placeholder="Enter Co-Applicant Mobile">
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+            <label>Complete Residential Address</label>
+            <textarea rows="2" placeholder="Enter complete home address details"></textarea>
+        </div>
+    </div>
+
+    <!-- SECTION 3: GUARANTOR / KYCS -->
+    <div class="section-heading">3. KYC & VERIFICATION DECLARATION</div>
+    <div class="fields-grid">
+        <div class="form-group">
+            <label>Applicant Aadhaar Card Number</label>
+            <input type="text" placeholder="0000 0000 0000">
+        </div>
+        <div class="form-group">
+            <label>Applicant PAN Card Number</label>
+            <input type="text" placeholder="ABCDE1234F">
+        </div>
+    </div>
+
+    <!-- SIGNATURE MANIFEST ROW -->
+    <div class="print-signature-row">
+        <div>Signature of Applicant<br><br>_____________________</div>
+        <div>Signature of Co-Applicant<br><br>_____________________</div>
+        <div>Authorized Field Officer<br><br>_____________________</div>
+    </div>
+
+    <!-- PRINT INTERACTION TRIGGER -->
+    <div class="action-area">
+        <button class="btn-print" onclick="window.print()">Print Loan Application Form</button>
+    </div>
+</div>
+
+<script>
+    function autoID() {
+        let b = document.getElementById('branch').value;
+        let rand = String(Math.floor(1000 + Math.random() * 9000));
+        document.getElementById('customID').value = b + rand;
+    }
+    function loadPreview(input, imgId) {
+        if (input.files && input.files[0]) {
+            let r = new FileReader();
+            r.onload = function(e) {
+                let img = document.getElementById(imgId);
+                img.src = e.target.result;
+                img.style.display = 'block';
+            }
+            r.readAsDataURL(input.files[0]);
+        }
+    }
+    window.onload = autoID;
+</script>
+</body>
+</html>
